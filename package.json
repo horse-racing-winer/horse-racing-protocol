@@ -1,0 +1,22 @@
+{
+  "name": "horse-racing-protocol",
+  "author": "Horse Racing Winer",
+  "contributors": [],
+  "description": "Horse Racing Winer protocol",
+  "license": "MIT",
+  "maintainers": [],
+  "sideEffects": false,
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build:sol": "cd packages/contracts && yarn hardhat compile",
+    "console": "cd packages/contracts && yarn hardhat console",
+    "lint": "yarn z-dev-run-lint"
+  },
+  "devDependencies": {
+    "@hrw/dev": "workspace:packages/dev"
+  }
+}

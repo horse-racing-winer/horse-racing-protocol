@@ -1,0 +1,19 @@
+{
+  "extends": "@hrw/dev/config/tsconfig.json",
+  "exclude": ["build/**/*", "**/build/**/*"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@hrw/contracts": ["packages/contracts/src"],
+      "@hrw/contracts/*": ["packages/contracts/src/*"],
+      "@hrw/dev": ["packages/dev"],
+      "@hrw/dev/*": ["packages/dev/*"],
+    },
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types"]
+  }
+}
