@@ -1,5 +1,6 @@
 import type { TransactionReceipt } from '@ethersproject/abstract-provider';
 import type { DeployOptions, UpgradeOptions } from '@openzeppelin/hardhat-upgrades/dist/utils';
+import type { Signer } from 'ethers';
 import type { Artifact } from 'hardhat/types';
 
 import fs from 'fs-extra';
@@ -62,6 +63,19 @@ export async function upgrade(name: string, opts?: UpgradeOptions) {
   console.log(
     `Upgrade ${name} success on transaction ${contract.deployTransaction.hash} with address ${contract.address} !`
   );
+}
+
+export async function getContract(name: string, signer?: Signer) {
+  const { name: chainName } = network;
+
+  const artifact = await artifacts.readArtifact(name);
+  const deploymentsPath = path.resolve(config.paths.root, 'upgrade-deployments');
+
+  const deployments: Deployments = fs.readJsonSync(
+    path.resolve(deploymentsPath, chainName, `${artifact.contractName}.json`)
+  );
+
+  return new ethers.Contract(deployments.address, deployments.abi, signer);
 }
 
 export function saveDeployments(deployments: Deployments) {

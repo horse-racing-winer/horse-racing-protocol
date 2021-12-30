@@ -16,7 +16,7 @@ export async function getNamedAccounts() {
   return {
     owner: accounts[0], // 0x2797b82EA7256817A4739dbe2dB96db6c59d230d
     beneficiary: accounts[1], // 0x0Fc0c315F3b38ca5a3bb7118fa689B9682eeA1E9
-    mintAddr1: accounts[2], // 0x86Db87B010F52DF54dad937e6b1f4766C173C305
-    mintAddr2: accounts[3] // 0x53a8BB5e3cC5bD9B3e698B296AC5b13A9b5678d8
+    mint720Addr: accounts[2], // 0x86Db87B010F52DF54dad937e6b1f4766C173C305
+    mint1780Addr: accounts[3] // 0x53a8BB5e3cC5bD9B3e698B296AC5b13A9b5678d8
   };
 }

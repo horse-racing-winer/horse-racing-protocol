@@ -24,6 +24,7 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     ///@notice initialize
     function initialize(address payable beneficiary_) external initializer {
         __ERC721_init("Horse Racing Blind Box", "HRBB");
+        __Ownable_init();
         beneficiary = beneficiary_;
         currentTokenId = 1;
         solds = 0;
