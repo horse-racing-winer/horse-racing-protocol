@@ -2411,11 +2411,13 @@ __metadata:
     "@openzeppelin/contracts": ^4.4.1
     "@openzeppelin/contracts-upgradeable": ^4.4.1
     "@openzeppelin/hardhat-upgrades": ^1.12.0
+    "@types/fs-extra": ^9.0.13
     "@types/mocha": ^9.0.0
     chai: ^4.3.4
     cross-env: ^7.0.3
     dotenv: ^10.0.0
     ethers: ^5.4.4
+    fs-extra: ^10.0.0
     hardhat: ^2.8.0
     hardhat-abi-exporter: ^2.4.1
     hardhat-gas-reporter: ^1.0.6
@@ -3246,6 +3248,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: f0c283fdef2dd7191168a37b9cb2625af3cfbd7f72b5a514f938bea0a135669f79d736186d434b9e81150b47ef1bf20d97b188014a00583556fad6ce59fb9bbf
+  languageName: node
+  linkType: hard
+
+"@types/fs-extra@npm:^9.0.13":
+  version: 9.0.13
+  resolution: "@types/fs-extra@npm:9.0.13"
+  dependencies:
+    "@types/node": "*"
+  checksum: add79e212acd5ac76b97b9045834e03a7996aef60a814185e0459088fd290519a3c1620865d588fa36c4498bf614210d2a703af5cf80aa1dbc125db78f6edac3
   languageName: node
   linkType: hard
 

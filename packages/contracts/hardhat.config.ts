@@ -11,11 +11,9 @@ import dotenv from 'dotenv';
 import { HardhatUserConfig } from 'hardhat/types';
 import { removeConsoleLog } from 'hardhat-preprocessor';
 
-dotenv.config({ path: '../../.env' });
+import { accounts } from './constants';
 
-const accounts = {
-  mnemonic: process.env.MNEMONIC || 'test test test test test test test test test test test junk'
-};
+dotenv.config({ path: '../../.env' });
 
 export default {
   abiExporter: {
@@ -41,7 +39,7 @@ export default {
   networks: {
     'avax-mainnet': {
       url: 'https://api.avax.network/ext/bc/C/rpc',
-      accounts: accounts,
+      accounts,
       chainId: 43114,
       live: true,
       saveDeployments: true,
@@ -49,7 +47,7 @@ export default {
     },
     'avax-testnet': {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
-      accounts: accounts,
+      accounts,
       chainId: 43113,
       live: true,
       saveDeployments: true,
