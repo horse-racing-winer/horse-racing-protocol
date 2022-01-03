@@ -10,6 +10,8 @@
     "paths": {
       "@hrw/contracts": ["packages/contracts/src"],
       "@hrw/contracts/*": ["packages/contracts/src/*"],
+      "@hrw/contracts-exchange": ["packages/contracts-exchange/src"],
+      "@hrw/contracts-exchange/*": ["packages/contracts-exchange/src/*"],
       "@hrw/dev": ["packages/dev"],
       "@hrw/dev/*": ["packages/dev/*"],
     },

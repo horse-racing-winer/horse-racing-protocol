@@ -17,6 +17,8 @@
     "lint": "yarn z-dev-run-lint"
   },
   "devDependencies": {
-    "@hrw/dev": "workspace:packages/dev"
+    "@hrw/dev": "workspace:packages/dev",
+    "hardhat": "^2.8.0",
+    "solc": "=0.8.4"
   }
 }

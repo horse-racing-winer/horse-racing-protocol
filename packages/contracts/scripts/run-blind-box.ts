@@ -1,6 +1,5 @@
-import { ethers } from 'hardhat';
+import { ethers, getNamedAccounts } from 'hardhat';
 
-import { getNamedAccounts } from '../utils/accounts';
 import { getContract } from '../utils/deploy';
 
 async function mint() {

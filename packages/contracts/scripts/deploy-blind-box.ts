@@ -1,4 +1,5 @@
-import { getNamedAccounts } from '../utils/accounts';
+import { getNamedAccounts } from 'hardhat';
+
 import { deploy } from '../utils/deploy';
 
 async function main() {
