@@ -2634,6 +2634,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@horse-racing/core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@horse-racing/core@workspace:packages/core"
+  dependencies:
+    "@ethersproject/abi": 5.4.0
+    "@ethersproject/abstract-provider": 5.4.1
+    "@ethersproject/abstract-signer": 5.4.1
+    "@ethersproject/bignumber": 5.4.1
+    "@ethersproject/bytes": 5.4.0
+    "@ethersproject/contracts": 5.4.1
+    "@ethersproject/providers": 5.4.3
+    "@ethersproject/units": 5.4.0
+  languageName: unknown
+  linkType: soft
+
 "@horse-racing/dev@workspace:packages/dev":
   version: 0.0.0-use.local
   resolution: "@horse-racing/dev@workspace:packages/dev"

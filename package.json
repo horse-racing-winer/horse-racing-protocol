@@ -12,6 +12,7 @@
     "packages/*"
   ],
   "scripts": {
+    "build:ts": "z-dev-build-ts",
     "build:sol": "cd packages/contracts && yarn hardhat compile",
     "console": "cd packages/contracts && yarn hardhat console",
     "lint": "yarn z-dev-run-lint"
