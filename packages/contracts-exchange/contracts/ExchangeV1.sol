@@ -10,7 +10,6 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 import "./exchange/ExchangeDomainV1.sol";
 import "./exchange/ExchangeStateV1.sol";
-import "./exchange/ExchangeOrdersHolderV1.sol";
 import "./utils/Bytes.sol";
 import "./utils/String.sol";
 import "./utils/Uint.sol";
@@ -49,16 +48,14 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
     TransferProxy public transferProxy;
     ERC20TransferProxy public erc20TransferProxy;
     ExchangeStateV1 public state;
-    ExchangeOrdersHolderV1 public ordersHolder;
 
     constructor(
         TransferProxy _transferProxy, ERC20TransferProxy _erc20TransferProxy, ExchangeStateV1 _state,
-        ExchangeOrdersHolderV1 _ordersHolder, address payable _beneficiary, address _buyerFeeSigner
+        address payable _beneficiary, address _buyerFeeSigner
     ) {
         transferProxy = _transferProxy;
         erc20TransferProxy = _erc20TransferProxy;
         state = _state;
-        ordersHolder = _ordersHolder;
         beneficiary = _beneficiary;
         buyerFeeSigner = _buyerFeeSigner;
     }
@@ -91,8 +88,8 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
         if (buyer == address(0x0)) {
             buyer = msg.sender;
         }
-        transferWithFeesPossibility(order.key.sellAsset, amount, order.key.owner, buyer, feeSide == FeeSide.SELL, buyerFee, order.sellerFee);
-        transferWithFeesPossibility(order.key.buyAsset, paying, msg.sender, order.key.owner, feeSide == FeeSide.BUY, order.sellerFee, buyerFee);
+        transferWithFeesPossibility(order.key.sellAsset, amount, order.key.owner, buyer, feeSide == FeeSide.SELL, buyerFee);
+        transferWithFeesPossibility(order.key.buyAsset, paying, msg.sender, order.key.owner, feeSide == FeeSide.BUY, buyerFee);
         emitBuy(order, amount, buyer);
     }
 
@@ -110,12 +107,8 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
     function validateOrderSig(
         Order memory order,
         Sig memory sig
-    ) internal view {
-        if (sig.v == 0 && sig.r == bytes32(0x0) && sig.s == bytes32(0x0)) {
-            require(ordersHolder.exists(order), "incorrect signature");
-        } else {
-            require(prepareMessage(order).recover(sig.v, sig.r, sig.s) == order.key.owner, "incorrect signature");
-        }
+    ) internal pure {
+        require(prepareMessage(order).recover(sig.v, sig.r, sig.s) == order.key.owner, "incorrect signature");
     }
 
     function validateBuyerFeeSig(
@@ -134,11 +127,11 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
         return keccak256(abi.encode(order)).toString();
     }
 
-    function transferWithFeesPossibility(Asset memory firstType, uint value, address from, address to, bool hasFee, uint256 sellerFee, uint256 buyerFee) internal {
+    function transferWithFeesPossibility(Asset memory firstType, uint value, address from, address to, bool hasFee, uint256 fee) internal {
         if (!hasFee) {
             transfer(firstType, value, from, to);
         } else {
-            transferWithFees(firstType, value, from, to, sellerFee, buyerFee);
+            transferWithFees(firstType, value, from, to, fee);
         }
     }
 
@@ -156,14 +149,14 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
         }
     }
 
-    function transferWithFees(Asset memory firstType, uint value, address from, address to, uint256 sellerFee, uint256 buyerFee) internal {
-        uint restValue = transferFeeToBeneficiary(firstType, from, value, sellerFee, buyerFee);
+    function transferWithFees(Asset memory firstType, uint value, address from, address to, uint256 fee) internal {
+        uint restValue = transferFeeToBeneficiary(firstType, from, value, fee);
         transfer(firstType, restValue, from, to);
     }
 
-    function transferFeeToBeneficiary(Asset memory asset, address from, uint total, uint sellerFee, uint buyerFee) internal returns (uint) {
-        (uint restValue, uint sellerFeeValue) = subFeeInBp(total, total, sellerFee);
-        uint buyerFeeValue = total.bp(buyerFee);
+    function transferFeeToBeneficiary(Asset memory asset, address from, uint total, uint fee) internal returns (uint) {
+        (uint restValue, uint sellerFeeValue) = subFeeInBp(total, total, fee);
+        uint buyerFeeValue = total.bp(fee);
         uint beneficiaryFee = buyerFeeValue.add(sellerFeeValue);
         if (beneficiaryFee > 0) {
             transfer(asset, beneficiaryFee, from, beneficiary);

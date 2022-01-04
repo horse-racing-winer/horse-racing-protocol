@@ -52,6 +52,9 @@ const base: HardhatUserConfig = {
     },
     mint1780Addr: {
       default: 3
+    },
+    buyerFeeSigner: {
+      default: 4
     }
   },
   networks: {

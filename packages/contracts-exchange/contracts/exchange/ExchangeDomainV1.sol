@@ -28,13 +28,8 @@ contract ExchangeDomainV1 {
     struct Order {
         OrderKey key;
 
-        /* how much has owner (in wei, or UINT256_MAX if ERC-721) */
         uint selling;
-        /* how much wants owner (in wei, or UINT256_MAX if ERC-721) */
         uint buying;
-
-        /* fee for selling */
-        uint sellerFee;
     }
 
     /* An ECDSA signature. */
