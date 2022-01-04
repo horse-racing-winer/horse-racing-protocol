@@ -7,7 +7,7 @@
   "name": "@horse-racing/dev",
   "sideEffects": false,
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "bin": {
     "z-dev-build-ts": "./scripts/z-dev-build-ts.mjs",
     "z-dev-clean-build": "./scripts/z-dev-clean-build.mjs",

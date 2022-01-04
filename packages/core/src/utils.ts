@@ -3,16 +3,10 @@ import { TransactionResponse } from '@ethersproject/providers';
 
 import { CallError, ContractError, OutOfGasError, UserRejectError } from './errors';
 
-export function randomHex(length: number): string {
-  const result: string[] = [];
-  const characters = 'ABCDEFabcdef0123456789';
-  const charactersLength = characters.length;
-
-  for (let i = 0; i < length; i++) {
-    result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+export function assert(condition: unknown, message: string): asserts condition {
+  if (!condition) {
+    throw new Error(message);
   }
-
-  return '0x' + result.join('');
 }
 
 export async function callMethod<T>(
