@@ -15,5 +15,5 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': require.resolve('babel-jest')
   },
-  transformIgnorePatterns: ['/node_modules/(?!@hrw|@babel/runtime/helpers/esm/)']
+  transformIgnorePatterns: ['/node_modules/(?!@horse-racing|@babel/runtime/helpers/esm/)']
 };

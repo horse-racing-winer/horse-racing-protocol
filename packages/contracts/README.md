@@ -1,4 +1,4 @@
-# @hrw/contracts
+# @horse-racing/contracts
 
 ## BlindBox
 

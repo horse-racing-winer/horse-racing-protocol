@@ -2579,9 +2579,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hrw/contracts-exchange@workspace:packages/contracts-exchange":
+"@horse-racing/contracts-exchange@workspace:packages/contracts-exchange":
   version: 0.0.0-use.local
-  resolution: "@hrw/contracts-exchange@workspace:packages/contracts-exchange"
+  resolution: "@horse-racing/contracts-exchange@workspace:packages/contracts-exchange"
   dependencies:
     "@nomiclabs/hardhat-ethers": ^2.0.3
     "@nomiclabs/hardhat-etherscan": ^2.1.8
@@ -2606,9 +2606,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hrw/contracts@workspace:packages/contracts":
+"@horse-racing/contracts@workspace:packages/contracts":
   version: 0.0.0-use.local
-  resolution: "@hrw/contracts@workspace:packages/contracts"
+  resolution: "@horse-racing/contracts@workspace:packages/contracts"
   dependencies:
     "@nomiclabs/hardhat-ethers": ^2.0.3
     "@nomiclabs/hardhat-etherscan": ^2.1.8
@@ -2634,9 +2634,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hrw/dev@workspace:packages/dev":
+"@horse-racing/dev@workspace:packages/dev":
   version: 0.0.0-use.local
-  resolution: "@hrw/dev@workspace:packages/dev"
+  resolution: "@horse-racing/dev@workspace:packages/dev"
   dependencies:
     "@babel/cli": ^7.16.0
     "@babel/core": ^7.16.5
@@ -8222,7 +8222,7 @@ fsevents@~2.1.1:
   version: 0.0.0-use.local
   resolution: "horse-racing-protocol@workspace:."
   dependencies:
-    "@hrw/dev": "workspace:packages/dev"
+    "@horse-racing/dev": "workspace:packages/dev"
     hardhat: ^2.8.0
     solc: =0.8.4
   languageName: unknown

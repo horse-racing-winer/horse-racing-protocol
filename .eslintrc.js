@@ -1,4 +1,4 @@
-const base = require('@hrw/dev/config/eslint.cjs');
+const base = require('@horse-racing/dev/config/eslint.cjs');
 
 module.exports = {
   ...base,
@@ -22,9 +22,9 @@ module.exports = {
     'simple-import-sort/imports': [2, {
       groups: [
         ['^\u0000'], // all side-effects (0 at start)
-        ['\u0000$', '^@hrw.*\u0000$', '^\\..*\u0000$'], // types (0 at end)
-        ['^[^/\\.]'], // non-hrw
-        ['^@hrw'], // hrw
+        ['\u0000$', '^@horse-racing.*\u0000$', '^\\..*\u0000$'], // types (0 at end)
+        ['^[^/\\.]'], // non-horse-racing
+        ['^@horse-racing'], // horse-racing
         ['^\\.\\.(?!/?$)', '^\\.\\./?$', '^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'] // local (. last)
       ]
     }],

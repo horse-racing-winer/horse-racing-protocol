@@ -1,5 +1,5 @@
 {
-  "extends": "@hrw/dev/config/tsconfig.json",
+  "extends": "@horse-racing/dev/config/tsconfig.json",
   "exclude": ["build/**/*", "**/build/**/*"],
   "compilerOptions": {
     "module": "commonjs",
@@ -8,12 +8,12 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@hrw/contracts": ["packages/contracts/src"],
-      "@hrw/contracts/*": ["packages/contracts/src/*"],
-      "@hrw/contracts-exchange": ["packages/contracts-exchange/src"],
-      "@hrw/contracts-exchange/*": ["packages/contracts-exchange/src/*"],
-      "@hrw/dev": ["packages/dev"],
-      "@hrw/dev/*": ["packages/dev/*"],
+      "@horse-racing/contracts": ["packages/contracts/src"],
+      "@horse-racing/contracts/*": ["packages/contracts/src/*"],
+      "@horse-racing/contracts-exchange": ["packages/contracts-exchange/src"],
+      "@horse-racing/contracts-exchange/*": ["packages/contracts-exchange/src/*"],
+      "@horse-racing/dev": ["packages/dev"],
+      "@horse-racing/dev/*": ["packages/dev/*"],
     },
     "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types"]

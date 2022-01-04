@@ -1,1 +1,1 @@
-module.exports = require('@hrw/dev/config/prettier.cjs');
+module.exports = require('@horse-racing/dev/config/prettier.cjs');

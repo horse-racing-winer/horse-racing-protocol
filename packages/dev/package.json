@@ -4,7 +4,7 @@
   "description": "Horse Racing Winer CI",
   "license": "MIT",
   "maintainers": [],
-  "name": "@hrw/dev",
+  "name": "@horse-racing/dev",
   "sideEffects": false,
   "type": "module",
   "version": "0.0.0",
