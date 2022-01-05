@@ -8,6 +8,10 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
+      "@horse-racing/core": ["packages/core/src"],
+      "@horse-racing/core/*": ["packages/core/src/*"],
+      "@horse-racing/exchange": ["packages/exchange/src"],
+      "@horse-racing/exchange/*": ["packages/exchange/src/*"],
       "@horse-racing/contracts": ["packages/contracts/src"],
       "@horse-racing/contracts/*": ["packages/contracts/src/*"],
       "@horse-racing/contracts-exchange": ["packages/contracts-exchange/src"],
