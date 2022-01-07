@@ -5,7 +5,7 @@
   "description": "Horse Racing Winer protocol exchange",
   "license": "MIT",
   "maintainers": [],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "@ethersproject/abi": "5.4.0",
     "@ethersproject/abstract-provider": "5.4.1",
@@ -15,6 +15,6 @@
     "@ethersproject/contracts": "5.4.1",
     "@ethersproject/providers": "5.4.3",
     "@ethersproject/units": "5.4.0",
-    "@horse-racing/core": "0.0.2"
+    "@horse-racing/core": "0.0.3"
   }
 }

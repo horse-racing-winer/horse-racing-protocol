@@ -2634,7 +2634,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@horse-racing/core@workspace:packages/core":
+"@horse-racing/core@0.0.3, @horse-racing/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@horse-racing/core@workspace:packages/core"
   dependencies:
@@ -2744,7 +2744,7 @@ __metadata:
     "@ethersproject/contracts": 5.4.1
     "@ethersproject/providers": 5.4.3
     "@ethersproject/units": 5.4.0
-    "@horse-racing/core": "workspace:packages/core"
+    "@horse-racing/core": 0.0.3
   languageName: unknown
   linkType: soft
 
