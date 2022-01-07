@@ -1,5 +1,5 @@
-import { Contract } from '@ethersproject/contracts';
-import { TransactionResponse } from '@ethersproject/providers';
+import type { Contract } from '@ethersproject/contracts';
+import type { TransactionResponse } from '@ethersproject/providers';
 
 import { CallError, ContractError, OutOfGasError, UserRejectError } from './errors';
 

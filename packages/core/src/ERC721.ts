@@ -1,5 +1,4 @@
 import type { Interface } from '@ethersproject/abi';
-import type { Provider } from '@ethersproject/abstract-provider';
 import type { Signer } from '@ethersproject/abstract-signer';
 import type { TransactionResponse } from '@ethersproject/providers';
 
@@ -16,13 +15,8 @@ class ERC721 extends BaseContract {
   public name?: string;
   public baseURI = '';
 
-  constructor(
-    address: string,
-    provider: Signer | Provider,
-    symbol: string,
-    abi = abis.ERC721 as Interface
-  ) {
-    super(address, provider, abi);
+  constructor(address: string, signer: Signer, symbol: string, abi = abis.ERC721 as Interface) {
+    super(address, signer, abi);
     this.symbol = symbol;
 
     this.#isReadyPromise = this.contract

@@ -1,5 +1,4 @@
 import type { Interface } from '@ethersproject/abi';
-import type { Provider } from '@ethersproject/abstract-provider';
 import type { Signer } from '@ethersproject/abstract-signer';
 import type { TransactionResponse } from '@ethersproject/providers';
 
@@ -10,8 +9,8 @@ import { ERC721 } from './ERC721';
 import { assert, callMethod } from './utils';
 
 class BlindBox extends ERC721 {
-  constructor(address: string, provider: Signer | Provider, abi = abis.BlindBox as Interface) {
-    super(address, provider, 'HRBB', abi);
+  constructor(address: string, signer: Signer, abi = abis.BlindBox as Interface) {
+    super(address, signer, 'HRBB', abi);
   }
 
   price(): Promise<BigNumber> {

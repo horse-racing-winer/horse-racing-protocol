@@ -1,9 +1,8 @@
 import type { Interface } from '@ethersproject/abi';
-import type { Provider } from '@ethersproject/abstract-provider';
 import type { Signer } from '@ethersproject/abstract-signer';
+import type { TransactionResponse } from '@ethersproject/providers';
 
 import { BigNumber } from '@ethersproject/bignumber';
-import { TransactionResponse } from '@ethersproject/providers';
 import { formatUnits } from '@ethersproject/units';
 
 import * as abis from './abis';
@@ -16,13 +15,8 @@ class ERC20 extends BaseContract {
   public symbol: string;
   public decimals = 18;
 
-  constructor(
-    address: string,
-    provider: Signer | Provider,
-    symbol = '',
-    abi = abis.ERC20 as Interface
-  ) {
-    super(address, provider, abi);
+  constructor(address: string, signer: Signer, symbol = '', abi = abis.ERC20 as Interface) {
+    super(address, signer, abi);
     this.symbol = symbol;
 
     this.#isReadyPromise = Promise.all([

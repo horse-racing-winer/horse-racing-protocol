@@ -1,10 +1,9 @@
 import type { Interface } from '@ethersproject/abi';
-import type { Provider } from '@ethersproject/abstract-provider';
 import type { Signer } from '@ethersproject/abstract-signer';
 import type { BigNumber } from '@ethersproject/bignumber';
+import type { TransactionResponse } from '@ethersproject/providers';
 
 import { BytesLike, hexValue } from '@ethersproject/bytes';
-import { TransactionResponse } from '@ethersproject/providers';
 
 import * as abis from './abis';
 import { BaseContract } from './base';
@@ -13,8 +12,8 @@ import { callMethod } from './utils';
 class ERC1155 extends BaseContract {
   #isReadyPromise: Promise<ERC1155>;
 
-  constructor(address: string, provider: Signer | Provider, abi = abis.ERC1155 as Interface) {
-    super(address, provider, abi);
+  constructor(address: string, signer: Signer, abi = abis.ERC1155 as Interface) {
+    super(address, signer, abi);
 
     this.#isReadyPromise = Promise.resolve(this);
   }
