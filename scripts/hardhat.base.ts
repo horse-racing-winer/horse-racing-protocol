@@ -58,6 +58,12 @@ const base: HardhatUserConfig = {
     }
   },
   networks: {
+    dev: {
+      url: 'http://127.0.0.1:8545/',
+      live: true,
+      saveDeployments: true,
+      tags: ['dev']
+    },
     'avax-mainnet': {
       url: 'https://api.avax.network/ext/bc/C/rpc',
       accounts,
