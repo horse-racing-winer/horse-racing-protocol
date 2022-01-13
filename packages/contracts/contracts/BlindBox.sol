@@ -8,6 +8,10 @@ import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
+interface Mintable {
+    function mint(address to, uint256 tokenId) external;
+}
+
 contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     using StringsUpgradeable for uint256;
 
@@ -18,6 +22,8 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     address payable public beneficiary;
     uint256 public solds;
     uint256 public price;
+    bool public openStart;
+    address public horse;
 
     event Buy(address indexed user, uint256 amount);
 
@@ -77,5 +83,32 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
             _safeMint(addr, i);
         }
         currentTokenId += amount;
+    }
+
+    function _open(uint256 tokenId) internal {
+        require(ownerOf(tokenId) == msg.sender, "BlindBox: not a owner");
+
+        _burn(tokenId);
+        Mintable(horse).mint(msg.sender, tokenId);
+    }
+
+    function open(uint256 tokenId) external {
+        require(openStart, "BlindBox: Not start");
+        _open(tokenId);
+    }
+
+    function batchOpen(uint256[] calldata tokenIds) external {
+        require(openStart, "BlindBox: Not start");
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            _open(tokenIds[i]);
+        }
+    }
+
+    function setOpenStart(bool started) external onlyOwner {
+        openStart = started;
+    }
+
+    function setHorse(address addr) external onlyOwner {
+        horse = addr;
     }
 }

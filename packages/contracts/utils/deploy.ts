@@ -49,7 +49,7 @@ export async function upgrade(name: string, opts?: UpgradeOptions) {
   const artifact = await artifacts.readArtifact(name);
   const deploymentsPath = path.resolve(config.paths.root, 'upgrade-deployments');
 
-  const deployments: Deployments = fs.readJsonSync(
+  let deployments: Deployments = fs.readJsonSync(
     path.resolve(deploymentsPath, chainName, `${artifact.contractName}.json`)
   );
 
@@ -60,6 +60,15 @@ export async function upgrade(name: string, opts?: UpgradeOptions) {
 
   await contract.deployed();
 
+  deployments = {
+    ...deployments,
+    address: contract.address,
+    transactionHash: contract.deployTransaction.hash,
+    receipt: await contract.deployTransaction.wait(),
+    ...artifact
+  };
+
+  saveDeployments(deployments);
   console.log(
     `Upgrade ${name} success on transaction ${contract.deployTransaction.hash} with address ${contract.address} !`
   );
