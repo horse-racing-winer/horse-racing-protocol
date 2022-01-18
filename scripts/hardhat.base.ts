@@ -88,7 +88,7 @@ const base: HardhatUserConfig = {
     deployments: 'deployments',
     imports: 'imports',
     sources: 'contracts',
-    tests: 'test'
+    tests: 'tests'
   },
   preprocess: {
     eachLine: removeConsoleLog(

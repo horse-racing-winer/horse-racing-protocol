@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@horse-racing/dev": "workspace:packages/dev",
+    "@types/chai": "^4.3.0",
     "hardhat": "^2.8.0",
     "solc": "=0.8.4"
   }

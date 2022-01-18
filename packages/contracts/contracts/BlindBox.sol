@@ -15,6 +15,13 @@ interface Mintable {
 contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     using StringsUpgradeable for uint256;
 
+    struct Pool {
+        uint256 price;
+        uint256 solds;
+        uint256 startTime;
+        uint256 endTime;
+    }
+
     uint256 public currentTokenId;
     mapping(address => uint256) public userBuys;
     uint256 public constant MAX_TOKEN_ID = 5000;
@@ -24,6 +31,9 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     uint256 public price;
     bool public openStart;
     address public horse;
+    uint256 public poolLength;
+    mapping(uint256 => Pool) public pools;
+    mapping(uint256 => mapping(address => uint256)) userBuysPer;
 
     event Buy(address indexed user, uint256 amount);
 
@@ -33,8 +43,6 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         __Ownable_init();
         beneficiary = beneficiary_;
         currentTokenId = 1;
-        solds = 0;
-        price = 5 ether;
     }
 
     function baseURI() public view virtual returns (string memory) {
@@ -48,29 +56,29 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         return bytes(base).length > 0 ? string(abi.encodePacked(base, tokenId.toString())) : "";
     }
 
-    function buy(uint256 amount) external payable {
-        require(amount * price == msg.value, "BlindBox: msg.value is not correct");
-        require(currentTokenId + amount - 1 <= solds, "BlindBox: Sold Out");
-        require(userBuys[msg.sender] + amount <= AMOUNT_PER_USER, "BlindBox: user only buy fives");
+    function buy(uint256 pid, uint256 amount) external payable {
+        require(pid < poolLength, "BlindBox: empty pool");
+        Pool memory pool = pools[pid];
+        require(block.timestamp >= pool.startTime, "BlindBox: not start");
+        require(block.timestamp <= pool.endTime, "BlindBox: ended");
+        require(amount * pool.price == msg.value, "BlindBox: msg.value is not correct");
+        require(currentTokenId + amount - 1 <= pool.solds, "BlindBox: Sold Out");
+        require(userBuysPer[pid][msg.sender] + amount <= AMOUNT_PER_USER, "BlindBox: user only buy fives");
 
         for (uint256 i = currentTokenId; i < currentTokenId + amount; i++) {
             _safeMint(msg.sender, i);
         }
 
         currentTokenId += amount;
-        userBuys[msg.sender] += amount;
+        userBuysPer[pid][msg.sender] += amount;
         beneficiary.transfer(address(this).balance);
 
         emit Buy(msg.sender, amount);
     }
 
-    function setPrice(uint256 newPrice) external onlyOwner {
-        price = newPrice;
-    }
-
-    function setSolds(uint256 newSolds) external onlyOwner {
-        require(newSolds <= MAX_TOKEN_ID, "BlindBox: tokenId max is 5000");
-        solds = newSolds;
+    function addPool(Pool calldata pool) external onlyOwner {
+        pools[poolLength] = pool;
+        poolLength += 1;
     }
 
     function setBeneficiary(address payable newBeneficiary) external onlyOwner {

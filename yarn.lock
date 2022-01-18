@@ -3466,6 +3466,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chai@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@types/chai@npm:4.3.0"
+  checksum: 3e393e094263db65df28a0123dc13f342937c1bab6cd173eae913d593c5b9a16b555713a08c34863a1fbf079aa7222b96197c70380a5c130549d6b2f6845a989
+  languageName: node
+  linkType: hard
+
 "@types/concat-stream@npm:^1.6.0":
   version: 1.6.0
   resolution: "@types/concat-stream@npm:1.6.0"
@@ -8254,6 +8261,7 @@ fsevents@~2.1.1:
   resolution: "horse-racing-protocol@workspace:."
   dependencies:
     "@horse-racing/dev": "workspace:packages/dev"
+    "@types/chai": ^4.3.0
     hardhat: ^2.8.0
     solc: =0.8.4
   languageName: unknown
