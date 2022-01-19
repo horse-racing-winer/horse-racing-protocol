@@ -4,7 +4,7 @@ import { DeployFunction } from 'hardhat-deploy/types';
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
   const { deploy } = deployments;
-  const { beneficiary, buyerFeeSigner, owner } = await getNamedAccounts();
+  const { beneficiary, owner } = await getNamedAccounts();
 
   const transferProxy = await deployments.get('TransferProxy');
   const erc20TransferProxy = await deployments.get('ERC20TransferProxy');
@@ -16,13 +16,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await deploy('ExchangeV1', {
     from: owner,
-    args: [
-      transferProxy.address,
-      erc20TransferProxy.address,
-      stateV1.address,
-      beneficiary,
-      buyerFeeSigner
-    ],
+    args: [transferProxy.address, erc20TransferProxy.address, stateV1.address, beneficiary],
     log: true
   });
 };

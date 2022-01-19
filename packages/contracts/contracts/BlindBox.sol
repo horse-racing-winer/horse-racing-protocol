@@ -56,6 +56,12 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         return bytes(base).length > 0 ? string(abi.encodePacked(base, tokenId.toString())) : "";
     }
 
+    function getUserBuyed(uint256 pid, address account) external view returns(uint256) {
+        require(pid < poolLength, "BlindBox: empty pool");
+
+        return userBuysPer[pid][account];
+    }
+
     function buy(uint256 pid, uint256 amount) external payable {
         require(pid < poolLength, "BlindBox: empty pool");
         Pool memory pool = pools[pid];

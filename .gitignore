@@ -33,3 +33,5 @@ abi/
 artifacts/
 cache/
 exports/
+**/upgrade-deployments/hardhat/
+**/deployment/hardhat/

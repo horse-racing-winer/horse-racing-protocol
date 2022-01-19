@@ -43,53 +43,54 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
     uint256 private constant UINT256_MAX = 2 ** 256 - 1;
 
     address payable public beneficiary;
-    address public buyerFeeSigner;
+
+    uint256 buyerFees = 250;
+    uint256 sellerFees = 250;
 
     TransferProxy public transferProxy;
     ERC20TransferProxy public erc20TransferProxy;
     ExchangeStateV1 public state;
 
     constructor(
-        TransferProxy _transferProxy, ERC20TransferProxy _erc20TransferProxy, ExchangeStateV1 _state,
-        address payable _beneficiary, address _buyerFeeSigner
+        TransferProxy _transferProxy, ERC20TransferProxy _erc20TransferProxy, ExchangeStateV1 _state, address payable _beneficiary
     ) {
         transferProxy = _transferProxy;
         erc20TransferProxy = _erc20TransferProxy;
         state = _state;
         beneficiary = _beneficiary;
-        buyerFeeSigner = _buyerFeeSigner;
     }
 
     function setBeneficiary(address payable newBeneficiary) external onlyOwner {
         beneficiary = newBeneficiary;
     }
 
-    function setBuyerFeeSigner(address newBuyerFeeSigner) external onlyOwner {
-        buyerFeeSigner = newBuyerFeeSigner;
+    function setBuyerFees(uint256 _buyerFees) external onlyOwner {
+        buyerFees = _buyerFees;
+    }
+
+    function setSellerFees(uint256 _sellerFees) external onlyOwner {
+        sellerFees = _sellerFees;
     }
 
     function exchange(
         Order calldata order,
         Sig calldata sig,
-        uint buyerFee,
-        Sig calldata buyerFeeSig,
         uint amount,
         address buyer
     ) payable external {
         validateOrderSig(order, sig);
-        validateBuyerFeeSig(order, buyerFee, buyerFeeSig);
         uint paying = order.buying.mul(amount).div(order.selling);
         verifyOpenAndModifyOrderState(order.key, order.selling, amount);
         require(order.key.sellAsset.assetType != AssetType.ETH, "ETH is not supported on sell side");
         if (order.key.buyAsset.assetType == AssetType.ETH) {
-            validateEthTransfer(paying, buyerFee);
+            validateEthTransfer(paying, buyerFees);
         }
         FeeSide feeSide = getFeeSide(order.key.sellAsset.assetType, order.key.buyAsset.assetType);
         if (buyer == address(0x0)) {
             buyer = msg.sender;
         }
-        transferWithFeesPossibility(order.key.sellAsset, amount, order.key.owner, buyer, feeSide == FeeSide.SELL, buyerFee);
-        transferWithFeesPossibility(order.key.buyAsset, paying, msg.sender, order.key.owner, feeSide == FeeSide.BUY, buyerFee);
+        transferWithFeesPossibility(order.key.sellAsset, amount, order.key.owner, buyer, feeSide == FeeSide.SELL, buyerFees, sellerFees);
+        transferWithFeesPossibility(order.key.buyAsset, paying, msg.sender, order.key.owner, feeSide == FeeSide.BUY, sellerFees, buyerFees);
         emitBuy(order, amount, buyer);
     }
 
@@ -111,27 +112,15 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
         require(prepareMessage(order).recover(sig.v, sig.r, sig.s) == order.key.owner, "incorrect signature");
     }
 
-    function validateBuyerFeeSig(
-        Order memory order,
-        uint buyerFee,
-        Sig memory sig
-    ) internal view {
-        require(prepareBuyerFeeMessage(order, buyerFee).recover(sig.v, sig.r, sig.s) == buyerFeeSigner, "incorrect buyer fee signature");
-    }
-
-    function prepareBuyerFeeMessage(Order memory order, uint fee) public pure returns (string memory) {
-        return keccak256(abi.encode(order, fee)).toString();
-    }
-
     function prepareMessage(Order memory order) public pure returns (string memory) {
         return keccak256(abi.encode(order)).toString();
     }
 
-    function transferWithFeesPossibility(Asset memory firstType, uint value, address from, address to, bool hasFee, uint256 fee) internal {
+    function transferWithFeesPossibility(Asset memory firstType, uint value, address from, address to, bool hasFee, uint256 sellerFee, uint256 buyerFee) internal {
         if (!hasFee) {
             transfer(firstType, value, from, to);
         } else {
-            transferWithFees(firstType, value, from, to, fee);
+            transferWithFees(firstType, value, from, to, sellerFee, buyerFee);
         }
     }
 
@@ -149,14 +138,14 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
         }
     }
 
-    function transferWithFees(Asset memory firstType, uint value, address from, address to, uint256 fee) internal {
-        uint restValue = transferFeeToBeneficiary(firstType, from, value, fee);
+    function transferWithFees(Asset memory firstType, uint value, address from, address to, uint256 sellerFee, uint256 buyerFee) internal {
+        uint restValue = transferFeeToBeneficiary(firstType, from, value, sellerFee, buyerFee);
         transfer(firstType, restValue, from, to);
     }
 
-    function transferFeeToBeneficiary(Asset memory asset, address from, uint total, uint fee) internal returns (uint) {
-        (uint restValue, uint sellerFeeValue) = subFeeInBp(total, total, fee);
-        uint buyerFeeValue = total.bp(fee);
+    function transferFeeToBeneficiary(Asset memory asset, address from, uint total, uint sellerFee, uint buyerFee) internal returns (uint) {
+        (uint restValue, uint sellerFeeValue) = subFeeInBp(total, total, sellerFee);
+        uint buyerFeeValue = total.bp(buyerFee);
         uint beneficiaryFee = buyerFeeValue.add(sellerFeeValue);
         if (beneficiaryFee > 0) {
             transfer(asset, beneficiaryFee, from, beneficiary);
