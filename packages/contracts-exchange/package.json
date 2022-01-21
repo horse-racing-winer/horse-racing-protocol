@@ -22,28 +22,10 @@
     "avax-mainnet:export": "hardhat --network avax-mainnet export --export exports/avax-mainnet.json",
     "avax-testnet:deploy": "hardhat --network avax-testnet deploy",
     "avax-testnet:verify": "hardhat --network avax-testnet etherscan-verify --solc-input",
-    "avax-testnet:export": "hardhat --network avax-testnet export --export exports/avax-mainnet.json"
+    "avax-testnet:export": "hardhat --network avax-testnet export --export exports/avax-mainnet.json",
+    "test": "hardhat test --verbose"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.3",
-    "@nomiclabs/hardhat-etherscan": "^2.1.8",
-    "@openzeppelin/contracts": "^4.4.1",
-    "@types/mocha": "^9.0.0",
-    "chai": "^4.3.4",
-    "cross-env": "^7.0.3",
-    "dotenv": "^10.0.0",
-    "ethers": "^5.4.4",
-    "hardhat": "^2.8.0",
-    "hardhat-abi-exporter": "^2.4.1",
-    "hardhat-deploy": "^0.9.23",
-    "hardhat-deploy-ethers": "^0.3.0-beta.12",
-    "hardhat-gas-reporter": "^1.0.6",
-    "hardhat-preprocessor": "^0.1.4",
-    "hardhat-spdx-license-identifier": "^2.0.3",
-    "hardhat-watcher": "^2.1.1",
-    "solc": "=0.8.4",
-    "ts-generator": "^0.1.1",
-    "ts-node": "^10.2.0",
-    "typescript": "^4.5.4"
+    "hardhat": "^2.8.0"
   }
 }

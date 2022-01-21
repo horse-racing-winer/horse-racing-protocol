@@ -7,23 +7,23 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 library UintLibrary {
     using SafeMath for uint;
 
-    function toString(uint256 i) internal pure returns (string memory) {
-        if (i == 0) {
+    function toString(uint256 value) internal pure returns (string memory) {
+        if (value == 0) {
             return "0";
         }
-        uint j = i;
-        uint len;
-        while (j != 0) {
-            len++;
-            j /= 10;
+        uint256 temp = value;
+        uint256 digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
         }
-        bytes memory bstr = new bytes(len);
-        uint k = len - 1;
-        while (i != 0) {
-            bstr[k--] = bytes1(uint8(48 + i % 10));
-            i /= 10;
+        bytes memory buffer = new bytes(digits);
+        while (value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
+            value /= 10;
         }
-        return string(bstr);
+        return string(buffer);
     }
 
     function bp(uint value, uint bpValue) internal pure returns (uint) {

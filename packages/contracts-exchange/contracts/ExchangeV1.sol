@@ -44,8 +44,8 @@ contract ExchangeV1 is Ownable, ExchangeDomainV1 {
 
     address payable public beneficiary;
 
-    uint256 buyerFees = 250;
-    uint256 sellerFees = 250;
+    uint256 public buyerFees = 250;
+    uint256 public sellerFees = 250;
 
     TransferProxy public transferProxy;
     ERC20TransferProxy public erc20TransferProxy;
