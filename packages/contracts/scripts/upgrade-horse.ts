@@ -1,7 +1,7 @@
 import { upgrade } from '../utils/deploy';
 
 async function main() {
-  await upgrade('BlindBox');
+  await upgrade('Horse');
 }
 
 main().catch(console.error);

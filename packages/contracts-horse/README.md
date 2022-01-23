@@ -1,1 +1,0 @@
-# @horse-racing/contracts-horse

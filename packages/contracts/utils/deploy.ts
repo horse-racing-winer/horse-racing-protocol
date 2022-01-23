@@ -1,5 +1,8 @@
 import type { TransactionReceipt } from '@ethersproject/abstract-provider';
-import type { DeployOptions, UpgradeOptions } from '@openzeppelin/hardhat-upgrades/dist/utils';
+import type {
+  DeployProxyOptions,
+  UpgradeProxyOptions
+} from '@openzeppelin/hardhat-upgrades/dist/utils';
 import type { Signer } from 'ethers';
 import type { Artifact } from 'hardhat/types';
 
@@ -16,7 +19,7 @@ interface Deployments extends Artifact {
   args: unknown[];
 }
 
-export async function deploy(name: string, args?: unknown[], opts?: DeployOptions) {
+export async function deploy(name: string, args?: unknown[], opts?: DeployProxyOptions) {
   console.log(`Start deploy ${name} ...`);
 
   const Contract = await ethers.getContractFactory(name);
@@ -43,11 +46,11 @@ export async function deploy(name: string, args?: unknown[], opts?: DeployOption
   saveDeployments(deployments);
 }
 
-export async function upgrade(name: string, opts?: UpgradeOptions) {
+export async function upgrade(name: string, opts?: UpgradeProxyOptions) {
   const { name: chainName } = network;
 
   const artifact = await artifacts.readArtifact(name);
-  const deploymentsPath = path.resolve(config.paths.root, 'upgrade-deployments');
+  const deploymentsPath = path.resolve(config.paths.root, 'deployments');
 
   let deployments: Deployments = fs.readJsonSync(
     path.resolve(deploymentsPath, chainName, `${artifact.contractName}.json`)
@@ -78,7 +81,7 @@ export async function getContract(name: string, signer?: Signer) {
   const { name: chainName } = network;
 
   const artifact = await artifacts.readArtifact(name);
-  const deploymentsPath = path.resolve(config.paths.root, 'upgrade-deployments');
+  const deploymentsPath = path.resolve(config.paths.root, 'deployments');
 
   const deployments: Deployments = fs.readJsonSync(
     path.resolve(deploymentsPath, chainName, `${artifact.contractName}.json`)
@@ -93,7 +96,7 @@ export function saveDeployments(deployments: Deployments) {
     name: chainName
   } = network;
 
-  const deploymentsPath = path.resolve(config.paths.root, 'upgrade-deployments');
+  const deploymentsPath = path.resolve(config.paths.root, 'deployments');
 
   fs.ensureDirSync(deploymentsPath);
 

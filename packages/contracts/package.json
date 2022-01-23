@@ -19,9 +19,16 @@
     "console": "hardhat console",
     "avax-mainnet:run": "hardhat --network avax-mainnet run",
     "avax-testnet:run": "hardhat --network avax-testnet run",
+    "avax-mainnet:deploy": "hardhat --network avax-mainnet deploy",
+    "avax-mainnet:verify": "hardhat --network avax-mainnet etherscan-verify --solc-input",
+    "avax-mainnet:export": "hardhat --network avax-mainnet export --export exports/avax-mainnet.json",
+    "avax-testnet:deploy": "hardhat --network avax-testnet deploy",
+    "avax-testnet:verify": "hardhat --network avax-testnet etherscan-verify --solc-input",
+    "avax-testnet:export": "hardhat --network avax-testnet export --export exports/avax-mainnet.json",
     "test": "hardhat test --verbose"
   },
   "devDependencies": {
+    "@openzeppelin/upgrades": "^2.8.0",
     "hardhat": "^2.8.0"
   }
 }

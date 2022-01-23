@@ -1,4 +1,4 @@
-import { deploy } from '../../utils/deploy';
+import { deploy } from '../utils/deploy';
 
 async function main() {
   await deploy('Horse');

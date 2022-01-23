@@ -1,6 +1,6 @@
 import { getNamedAccounts } from 'hardhat';
 
-import { deploy } from '../../utils/deploy';
+import { deploy } from '../utils/deploy';
 
 async function main() {
   const { beneficiary } = await getNamedAccounts();
