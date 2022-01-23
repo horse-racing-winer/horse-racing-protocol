@@ -1,7 +1,7 @@
 import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 import { verifyMessage } from '@ethersproject/wallet';
-import { expect } from 'chai';
+import { expect, util } from 'chai';
 import { BigNumber, Contract, ContractFactory, utils } from 'ethers';
 import { ethers } from 'hardhat';
 

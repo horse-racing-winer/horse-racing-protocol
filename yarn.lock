@@ -2587,6 +2587,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@horse-racing/contracts-horse@workspace:packages/contracts-horse":
+  version: 0.0.0-use.local
+  resolution: "@horse-racing/contracts-horse@workspace:packages/contracts-horse"
+  dependencies:
+    hardhat: ^2.8.0
+  languageName: unknown
+  linkType: soft
+
 "@horse-racing/contracts@workspace:packages/contracts":
   version: 0.0.0-use.local
   resolution: "@horse-racing/contracts@workspace:packages/contracts"

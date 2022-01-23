@@ -8,25 +8,16 @@ import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
-interface Randomable {
-    function randomTypes(uint256 seeds) external returns(uint8);
-}
-
 contract Horse is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     mapping(address => bool) minters;
     mapping(uint256 => string) tokenURIs;
-    address public randomOracle;
 
     mapping(uint256 => uint8) internal _types;
 
     ///@notice initialize
-    function initialize(address[] calldata minters_) external initializer {
+    function initialize() external initializer {
         __ERC721_init("Horse", "Horse");
         __Ownable_init();
-
-        for (uint256 i = 0; i < minters_.length; i++) {
-            minters[minters_[i]] = true;
-        }
     }
 
     function baseURI() public view virtual returns (string memory) {
@@ -52,15 +43,22 @@ contract Horse is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         return _types[tokenId];
     }
 
-
-    function setRandomOracle(address addr) external onlyOwner {
-        randomOracle = addr;
+    function addMinters(address[] calldata _minters) external onlyOwner {
+        for (uint256 i = 0; i < _minters.length; i++) {
+            minters[_minters[i]] = true;
+        }
     }
 
-    function mint(address to, uint256 tokenId) external {
+    function removeMinters(address[] calldata _minters) external onlyOwner {
+        for (uint256 i = 0; i < _minters.length; i++) {
+            minters[_minters[i]] = false;
+        }
+    }
+
+    function mint(address to, uint256 tokenId, uint8 _type) external {
         require(minters[msg.sender], "Horse: Only minter call");
         _safeMint(to, tokenId);
 
-        _types[tokenId] = Randomable(randomOracle).randomTypes(tokenId);
+        _types[tokenId] = _type;
     }
 }
