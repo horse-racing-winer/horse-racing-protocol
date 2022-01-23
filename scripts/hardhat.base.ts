@@ -18,7 +18,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const accounts = {
   mnemonic: process.env.MNEMONIC || 'test test test test test test test test test test test junk',
-  count: 10
+  count: 200
 };
 
 const base: HardhatUserConfig = {
@@ -52,6 +52,10 @@ const base: HardhatUserConfig = {
     },
     mint1780Addr: {
       default: 3
+    },
+    signer: {
+      default: 100,
+      hardhat: 10
     }
   },
   networks: {
