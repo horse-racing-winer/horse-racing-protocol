@@ -13,6 +13,7 @@ contract Horse is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     mapping(uint256 => string) tokenURIs;
 
     mapping(uint256 => uint8) internal _types;
+    uint256 public currentTokenId;
 
     ///@notice initialize
     function initialize() external initializer {
@@ -55,10 +56,14 @@ contract Horse is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         }
     }
 
-    function mint(address to, uint256 tokenId, uint8 _type) external {
+    function mint(address to, uint8 _type) external returns(uint256) {
         require(minters[msg.sender], "Horse: Only minter call");
+        uint256 tokenId = currentTokenId + 1;
         _safeMint(to, tokenId);
 
         _types[tokenId] = _type;
+        currentTokenId++;
+
+        return tokenId;
     }
 }

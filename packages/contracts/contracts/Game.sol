@@ -21,7 +21,6 @@ contract Game is Initializable, OwnableUpgradeable {
         uint256 salt;
         uint256 horse1;
         uint256 horse2;
-        uint256 newHorse;
         uint8 newType;
     }
 
@@ -44,7 +43,7 @@ contract Game is Initializable, OwnableUpgradeable {
     event WithdrawHrw(address indexed account, uint256 total, uint256 amount);
     event DepositHorse(address indexed account, uint256[] tokenIds);
     event WithdrawHorse(address indexed account, uint256[] tokenIds);
-    event Breed(address indexed account, BreedData breedData);
+    event Breed(address indexed account, BreedData breedData, uint256 newHorse);
 
     ///@notice initialize
     function initialize(address _signer, IERC20Upgradeable _hrw, Horse _horse) external initializer {
@@ -129,10 +128,10 @@ contract Game is Initializable, OwnableUpgradeable {
         require(userHorseMapping[msg.sender][breedData.horse2], "Game: user has not horse2");
         require(keccak256(abi.encode(breedData)).toString().recover(v, r, s) == signer, "Game: signature verify error");
 
-        horse.mint(address(this), breedData.newHorse, breedData.newType);
-        userHorse[breedData.owner].push(breedData.newHorse);
-        userHorseMapping[breedData.owner][breedData.newHorse] = true;
+        uint256 newHorse = horse.mint(address(this), breedData.newType);
+        userHorse[breedData.owner].push(newHorse);
+        userHorseMapping[breedData.owner][newHorse] = true;
 
-        emit Breed(msg.sender, breedData);
+        emit Breed(msg.sender, breedData, newHorse);
     }
 }

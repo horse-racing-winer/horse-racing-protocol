@@ -1,22 +1,8 @@
-import type { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-
-import { verifyMessage } from '@ethersproject/wallet';
-import { expect, util } from 'chai';
-import { BigNumber, Contract, ContractFactory, utils } from 'ethers';
-import {
-  arrayify,
-  defaultAbiCoder,
-  hashMessage,
-  keccak256,
-  recoverAddress,
-  solidityKeccak256,
-  splitSignature
-} from 'ethers/lib/utils';
-import { deployments, ethers, getNamedAccounts } from 'hardhat';
+import { Contract } from 'ethers';
+import { defaultAbiCoder, keccak256, splitSignature } from 'ethers/lib/utils';
+import { ethers, getNamedAccounts } from 'hardhat';
 
 import { deploy, getContract } from '../utils/deploy';
-import { AssetType } from './types';
-import { EMPTY_ADDRESS, ETHER, getRsv, UINT256_MAX } from './util';
 
 describe('Game', function () {
   let game: Contract;
@@ -24,7 +10,7 @@ describe('Game', function () {
   before('deploy contract', async function () {
     const { owner, signer } = await getNamedAccounts();
 
-    await deploy('Game', [signer]);
+    await deploy('Game', [signer, signer, signer]);
 
     game = await getContract('Game', await ethers.getSigner(owner));
   });

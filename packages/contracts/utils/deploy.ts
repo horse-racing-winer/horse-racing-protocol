@@ -77,7 +77,7 @@ export async function upgrade(name: string, opts?: UpgradeProxyOptions) {
   );
 }
 
-export async function getContract(name: string, signer?: Signer) {
+export async function getContract(name: string, signer?: Signer | string) {
   const { name: chainName } = network;
 
   const artifact = await artifacts.readArtifact(name);
@@ -87,7 +87,11 @@ export async function getContract(name: string, signer?: Signer) {
     path.resolve(deploymentsPath, chainName, `${artifact.contractName}.json`)
   );
 
-  return new ethers.Contract(deployments.address, deployments.abi, signer);
+  return new ethers.Contract(
+    deployments.address,
+    deployments.abi,
+    typeof signer === 'string' ? await ethers.getSigner(signer) : signer
+  );
 }
 
 export function saveDeployments(deployments: Deployments) {
