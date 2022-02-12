@@ -6,12 +6,13 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
-import "./Horse.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721ReceiverUpgradeable.sol";
 
+import "./Horse.sol";
 import "./utils/String.sol";
 import "./utils/Bytes.sol";
 
-contract Game is Initializable, OwnableUpgradeable {
+contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
     using StringLibrary for string;
     using BytesLibrary for bytes32;
@@ -57,6 +58,10 @@ contract Game is Initializable, OwnableUpgradeable {
         signer = _signer;
     }
 
+    function userHorses(address account) external view returns(uint256[] memory) {
+        return userHorse[account];
+    }
+
     function depositNative() external payable {
         userNative[msg.sender] += msg.value;
 
@@ -67,8 +72,8 @@ contract Game is Initializable, OwnableUpgradeable {
         require(value > userWithdrawNative[msg.sender], "Game: No balance to withdraw");
         require(keccak256(abi.encode(msg.sender, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
 
-        userWithdrawNative[msg.sender] = value;
         payable(msg.sender).transfer(value - userWithdrawNative[msg.sender]);
+        userWithdrawNative[msg.sender] = value;
 
         emit WithdrawNative(msg.sender, value, value - userWithdrawNative[msg.sender]);
     }
@@ -84,8 +89,8 @@ contract Game is Initializable, OwnableUpgradeable {
         require(value > userWithdrawHrw[msg.sender], "Game: No balance to withdraw");
         require(keccak256(abi.encode(msg.sender, hrw, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
 
-        userWithdrawHrw[msg.sender] = value;
         hrw.transfer(msg.sender, value - userWithdrawHrw[msg.sender]);
+        userWithdrawHrw[msg.sender] = value;
 
         emit WithdrawHrw(msg.sender, value, value - userWithdrawHrw[msg.sender]);
     }
@@ -107,11 +112,10 @@ contract Game is Initializable, OwnableUpgradeable {
         for (uint256 i = 0; i < tokenIds.length; i++) {
             require(userHorseMapping[msg.sender][tokenIds[i]], "Game: Not deposit tokenId");
             horse.safeTransferFrom(address(this), msg.sender, tokenIds[i]);
-            userHorse[msg.sender].push(tokenIds[i]);
             userHorseMapping[msg.sender][tokenIds[i]] = false;
         }
 
-        uint256[] memory newHorse = userHorse[msg.sender];
+        uint256[] memory newHorse;
         uint256 j = 0;
         for (uint256 i = 0; i < userHorse[msg.sender].length; i++) {
             if (userHorseMapping[msg.sender][userHorse[msg.sender][i]]) {
@@ -133,5 +137,14 @@ contract Game is Initializable, OwnableUpgradeable {
         userHorseMapping[breedData.owner][newHorse] = true;
 
         emit Breed(msg.sender, breedData, newHorse);
+    }
+
+    function onERC721Received(
+        address operator,
+        address from,
+        uint256 tokenId,
+        bytes calldata data
+    ) external pure override returns (bytes4) {
+        return IERC721ReceiverUpgradeable.onERC721Received.selector;
     }
 }
