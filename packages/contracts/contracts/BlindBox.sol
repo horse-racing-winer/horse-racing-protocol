@@ -99,6 +99,13 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         currentTokenId += amount;
     }
 
+    function batchTransferFrom(address[] calldata froms, address[] calldata tos, uint256[] calldata tokenIds) external {
+        require(tos.length == tokenIds.length && tokenIds.length == froms.length, "BlindBox: tos.length neq tokenIds.length neq froms.length");
+        for (uint256 i = 0; i < tos.length; i++) {
+            transferFrom(froms[i], tos[i], tokenIds[i]);
+        }
+    }
+
     function _open(uint256 tokenId) internal {
         require(ownerOf(tokenId) == msg.sender, "BlindBox: not a owner");
 

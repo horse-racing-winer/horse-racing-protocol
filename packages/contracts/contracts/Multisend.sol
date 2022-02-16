@@ -39,4 +39,11 @@ contract Multisend is Initializable, OwnableUpgradeable {
             ERC721Upgradeable(addr).safeTransferFrom(owner, d.receipt, d.tokenId);
         }
     }
+
+    function transferErc721Mine(address addr, ERC721Data[] calldata data) external {
+        for (uint256 i = 0; i < data.length; i++) {
+            ERC721Data memory d = data[i];
+            ERC721Upgradeable(addr).safeTransferFrom(msg.sender, d.receipt, d.tokenId);
+        }
+    }
 }

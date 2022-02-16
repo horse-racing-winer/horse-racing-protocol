@@ -20,18 +20,36 @@ function main() {
 
   let arr = [];
 
-  for (let i = 0; i < 2500; i++) {
+  for (let i = 0; i < 750; i++) {
     arr.push(i);
   }
 
   while (arr.length > 0) {
     arr = shuffle(arr);
 
-    if (types[1].length < 10) {
+    if (types[1].length < 3) {
       types[1].push(arr.shift() + 1);
-    } else if (types[2].length < 80) {
+    } else if (types[2].length < 24) {
       types[2].push(arr.shift() + 1);
-    } else if (types[3].length < 410) {
+    } else if (types[3].length < 120) {
+      types[3].push(arr.shift() + 1);
+    } else {
+      types[4].push(arr.shift() + 1);
+    }
+  }
+
+  for (let i = 750; i < 1210; i++) {
+    arr.push(i);
+  }
+
+  while (arr.length > 0) {
+    arr = shuffle(arr);
+
+    if (types[1].length < 1) {
+      types[1].push(arr.shift() + 1);
+    } else if (types[2].length < 9) {
+      types[2].push(arr.shift() + 1);
+    } else if (types[3].length < 60) {
       types[3].push(arr.shift() + 1);
     } else {
       types[4].push(arr.shift() + 1);
