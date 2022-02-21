@@ -115,14 +115,13 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
             userHorseMapping[msg.sender][tokenIds[i]] = false;
         }
 
-        uint256[] memory newHorse;
-        uint256 j = 0;
-        for (uint256 i = 0; i < userHorse[msg.sender].length; i++) {
-            if (userHorseMapping[msg.sender][userHorse[msg.sender][i]]) {
-                newHorse[j++] = userHorse[msg.sender][i];
+        uint256[] memory oldHorse = userHorse[msg.sender];
+        delete userHorse[msg.sender];
+        for (uint256 i = 0; i < oldHorse.length; i++) {
+            if (userHorseMapping[msg.sender][oldHorse[i]]) {
+                userHorse[msg.sender].push(oldHorse[i]);
             }
         }
-        userHorse[msg.sender] = newHorse;
 
         emit WithdrawHorse(msg.sender, tokenIds);
     }
