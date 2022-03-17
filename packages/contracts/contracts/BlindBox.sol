@@ -87,6 +87,10 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         poolLength += 1;
     }
 
+    function setPool(uint256 pid, Pool calldata pool) external onlyOwner {
+        pools[pid] = pool;
+    }
+
     function setBeneficiary(address payable newBeneficiary) external onlyOwner {
         beneficiary = newBeneficiary;
     }
