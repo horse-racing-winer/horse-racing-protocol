@@ -9,7 +9,7 @@ import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 interface Mintable {
-    function mint(address to, uint256 tokenId) external;
+    function mint(address to, uint8 types) external;
 }
 
 contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
@@ -34,6 +34,8 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     uint256 public poolLength;
     mapping(uint256 => Pool) public pools;
     mapping(uint256 => mapping(address => uint256)) userBuysPer;
+    mapping(uint256 => uint8) types;
+    uint256 public constant OPEN_FEES = 0.54 ether;
 
     event Buy(address indexed user, uint256 amount);
 
@@ -112,21 +114,27 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
 
     function _open(uint256 tokenId) internal {
         require(ownerOf(tokenId) == msg.sender, "BlindBox: not a owner");
+        require(types[tokenId] > 0 && types[tokenId] < 5, "BlindBox: type error");
 
         _burn(tokenId);
-        Mintable(horse).mint(msg.sender, tokenId);
+        Mintable(horse).mint(msg.sender, types[tokenId]);
     }
 
-    function open(uint256 tokenId) external {
+    function open(uint256 tokenId) payable external {
         require(openStart, "BlindBox: Not start");
+        require(msg.value == OPEN_FEES, "BlindBox: fee not correct");
         _open(tokenId);
+        beneficiary.transfer(address(this).balance);
     }
 
-    function batchOpen(uint256[] calldata tokenIds) external {
+    function batchOpen(uint256[] calldata tokenIds) payable external {
         require(openStart, "BlindBox: Not start");
+        require(msg.value == OPEN_FEES * tokenIds.length, "BlindBox: fee not correct");
+
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _open(tokenIds[i]);
         }
+        beneficiary.transfer(address(this).balance);
     }
 
     function setOpenStart(bool started) external onlyOwner {
@@ -135,5 +143,20 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
 
     function setHorse(address addr) external onlyOwner {
         horse = addr;
+    }
+
+    function resetTypes(uint256[] calldata type_1, uint256[] calldata type_2, uint256[] calldata type_3, uint256[] calldata type_4) external onlyOwner {
+        for (uint256 i = 0; i < type_1.length; i++) {
+            types[type_1[i]] = 1;
+        }
+        for (uint256 i = 0; i < type_2.length; i++) {
+            types[type_2[i]] = 2;
+        }
+        for (uint256 i = 0; i < type_3.length; i++) {
+            types[type_3[i]] = 3;
+        }
+        for (uint256 i = 0; i < type_4.length; i++) {
+            types[type_4[i]] = 4;
+        }
     }
 }
