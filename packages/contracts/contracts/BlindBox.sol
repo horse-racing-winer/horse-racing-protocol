@@ -35,7 +35,7 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     mapping(uint256 => Pool) public pools;
     mapping(uint256 => mapping(address => uint256)) userBuysPer;
     mapping(uint256 => uint8) types;
-    uint256 public constant OPEN_FEES = 0.54 ether;
+    uint256 public openFees;
 
     event Buy(address indexed user, uint256 amount);
 
@@ -84,6 +84,10 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         emit Buy(msg.sender, amount);
     }
 
+    function setOpenFees(uint256 _fees) external onlyOwner {
+        openFees = _fees;
+    }
+
     function addPool(Pool calldata pool) external onlyOwner {
         pools[poolLength] = pool;
         poolLength += 1;
@@ -122,14 +126,14 @@ contract BlindBox is Initializable, ERC721Upgradeable, OwnableUpgradeable {
 
     function open(uint256 tokenId) payable external {
         require(openStart, "BlindBox: Not start");
-        require(msg.value == OPEN_FEES, "BlindBox: fee not correct");
+        require(msg.value == openFees, "BlindBox: fee not correct");
         _open(tokenId);
         beneficiary.transfer(address(this).balance);
     }
 
     function batchOpen(uint256[] calldata tokenIds) payable external {
         require(openStart, "BlindBox: Not start");
-        require(msg.value == OPEN_FEES * tokenIds.length, "BlindBox: fee not correct");
+        require(msg.value == openFees * tokenIds.length, "BlindBox: fee not correct");
 
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _open(tokenIds[i]);

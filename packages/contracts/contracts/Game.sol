@@ -38,6 +38,9 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
     mapping(address => uint256[]) public userHorse;
     mapping(address => mapping(uint256 => bool)) public userHorseMapping;
 
+    address payable beneficiary;
+    uint256 public withdrawFees;
+
     event DepositNative(address indexed account, uint256 value);
     event WithdrawNative(address indexed account, uint256 total, uint256 amount);
     event DepositHrw(address indexed account, uint256 value);
@@ -58,6 +61,14 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
         signer = _signer;
     }
 
+    function setBeneficiary(address payable _beneficiary) external onlyOwner {
+        beneficiary = _beneficiary;
+    }
+
+    function setWithdrawFees(uint256 _fees) external onlyOwner {
+        withdrawFees = _fees;
+    }
+
     function userHorses(address account) external view returns(uint256[] memory) {
         return userHorse[account];
     }
@@ -72,10 +83,13 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
         require(value > userWithdrawNative[msg.sender], "Game: No balance to withdraw");
         require(keccak256(abi.encode(msg.sender, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
 
-        payable(msg.sender).transfer(value - userWithdrawNative[msg.sender]);
+        uint256 withdrawValue = value - userWithdrawNative[msg.sender];
+        uint256 fees = withdrawValue * withdrawFees / 10000;
+        payable(msg.sender).transfer(withdrawValue - fees);
+        beneficiary.transfer(fees);
         userWithdrawNative[msg.sender] = value;
 
-        emit WithdrawNative(msg.sender, value, value - userWithdrawNative[msg.sender]);
+        emit WithdrawNative(msg.sender, value, withdrawValue);
     }
 
     function depositHrw(uint256 amount) external payable {
@@ -89,10 +103,13 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
         require(value > userWithdrawHrw[msg.sender], "Game: No balance to withdraw");
         require(keccak256(abi.encode(msg.sender, hrw, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
 
-        hrw.transfer(msg.sender, value - userWithdrawHrw[msg.sender]);
+        uint256 withdrawValue = value - userWithdrawHrw[msg.sender];
+        uint256 fees = withdrawValue * withdrawFees / 10000;
+        hrw.transfer(msg.sender, withdrawValue - fees);
+        hrw.transfer(beneficiary, fees);
         userWithdrawHrw[msg.sender] = value;
 
-        emit WithdrawHrw(msg.sender, value, value - userWithdrawHrw[msg.sender]);
+        emit WithdrawHrw(msg.sender, value, withdrawValue);
     }
 
     function depositHorse(uint256[] calldata tokenIds) external payable {

@@ -53,6 +53,9 @@ const base: HardhatUserConfig = {
     mint1780Addr: {
       default: 3
     },
+    beneficiaryGame: {
+      default: 4
+    },
     signer: {
       default: 100,
       hardhat: 10
