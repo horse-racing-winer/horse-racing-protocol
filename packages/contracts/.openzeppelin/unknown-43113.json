@@ -4060,6 +4060,604 @@
           }
         }
       }
+    },
+    "a29cc6ae9b4a528e06bdc5de8142f2488ee2d39486b49772af7f5bdc59a59d61": {
+      "address": "0x14517B1058e4622f1F09065107CAACabCa3e3638",
+      "txHash": "0xcf4444082a760b7875f2dcdd11f33ecc80b6628ccb42ff1e3b3e3ddd7ad47f74",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:82"
+          },
+          {
+            "contract": "Game",
+            "label": "signer",
+            "type": "t_address",
+            "src": "contracts/Game.sol:28"
+          },
+          {
+            "contract": "Game",
+            "label": "hrw",
+            "type": "t_contract(IERC20Upgradeable)277",
+            "src": "contracts/Game.sol:29"
+          },
+          {
+            "contract": "Game",
+            "label": "horse",
+            "type": "t_contract(Horse)7859",
+            "src": "contracts/Game.sol:30"
+          },
+          {
+            "contract": "Game",
+            "label": "userNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:32"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:33"
+          },
+          {
+            "contract": "Game",
+            "label": "userHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:35"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:36"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorse",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "src": "contracts/Game.sol:38"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorseMapping",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "src": "contracts/Game.sol:39"
+          },
+          {
+            "contract": "Game",
+            "label": "beneficiary",
+            "type": "t_address_payable",
+            "src": "contracts/Game.sol:41"
+          },
+          {
+            "contract": "Game",
+            "label": "withdrawFees",
+            "type": "t_uint256",
+            "src": "contracts/Game.sol:42"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IERC20Upgradeable)277": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(Horse)7859": {
+            "label": "contract Horse"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "40bff263a13be6d5447c2c779c43401bf574d70ea41529f902d3c647a4e2b593": {
+      "address": "0x5D736A8915c3B655502C7a3c19d26b629aD165B3",
+      "txHash": "0x052723cb28bd27f6111176dc01a3a94357dd508fa1fec5f104da722e238f171f",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:82"
+          },
+          {
+            "contract": "Game",
+            "label": "signer",
+            "type": "t_address",
+            "src": "contracts/Game.sol:28"
+          },
+          {
+            "contract": "Game",
+            "label": "hrw",
+            "type": "t_contract(IERC20Upgradeable)277",
+            "src": "contracts/Game.sol:29"
+          },
+          {
+            "contract": "Game",
+            "label": "horse",
+            "type": "t_contract(Horse)7885",
+            "src": "contracts/Game.sol:30"
+          },
+          {
+            "contract": "Game",
+            "label": "userNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:32"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:33"
+          },
+          {
+            "contract": "Game",
+            "label": "userHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:35"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:36"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorse",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "src": "contracts/Game.sol:38"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorseMapping",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "src": "contracts/Game.sol:39"
+          },
+          {
+            "contract": "Game",
+            "label": "beneficiary",
+            "type": "t_address_payable",
+            "src": "contracts/Game.sol:41"
+          },
+          {
+            "contract": "Game",
+            "label": "withdrawFees",
+            "type": "t_uint256",
+            "src": "contracts/Game.sol:42"
+          },
+          {
+            "contract": "Game",
+            "label": "caller",
+            "type": "t_address",
+            "src": "contracts/Game.sol:43"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IERC20Upgradeable)277": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(Horse)7885": {
+            "label": "contract Horse"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "6cdc24c4e1a29f15a7c7d6370e0bf9e1e2e09fa70c4387a20fb91b4933685b51": {
+      "address": "0xDeB055E6d388287E927792aFA525C013f130bA87",
+      "txHash": "0x702ac69a51381685a815783cc3e20ee56410c8501b05f49f4e42914f7da4aacd",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:82"
+          },
+          {
+            "contract": "Game",
+            "label": "signer",
+            "type": "t_address",
+            "src": "contracts/Game.sol:28"
+          },
+          {
+            "contract": "Game",
+            "label": "hrw",
+            "type": "t_contract(IERC20Upgradeable)277",
+            "src": "contracts/Game.sol:29"
+          },
+          {
+            "contract": "Game",
+            "label": "horse",
+            "type": "t_contract(Horse)7891",
+            "src": "contracts/Game.sol:30"
+          },
+          {
+            "contract": "Game",
+            "label": "userNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:32"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:33"
+          },
+          {
+            "contract": "Game",
+            "label": "userHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:35"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:36"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorse",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "src": "contracts/Game.sol:38"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorseMapping",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "src": "contracts/Game.sol:39"
+          },
+          {
+            "contract": "Game",
+            "label": "beneficiary",
+            "type": "t_address_payable",
+            "src": "contracts/Game.sol:41"
+          },
+          {
+            "contract": "Game",
+            "label": "withdrawFees",
+            "type": "t_uint256",
+            "src": "contracts/Game.sol:42"
+          },
+          {
+            "contract": "Game",
+            "label": "caller",
+            "type": "t_address",
+            "src": "contracts/Game.sol:43"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IERC20Upgradeable)277": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(Horse)7891": {
+            "label": "contract Horse"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "fbb8f9c1db167f4e404a7c5021913234b29ce8a70333f806e354f6a6bbfafd98": {
+      "address": "0x22954921985120B5F38c66FCE550978198658178",
+      "txHash": "0xcc07073397418cfd675e28a2e230e6da632bbeb209ba8468949034b859a61bb0",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:82"
+          },
+          {
+            "contract": "Game",
+            "label": "signer",
+            "type": "t_address",
+            "src": "contracts/Game.sol:28"
+          },
+          {
+            "contract": "Game",
+            "label": "hrw",
+            "type": "t_contract(IERC20Upgradeable)277",
+            "src": "contracts/Game.sol:29"
+          },
+          {
+            "contract": "Game",
+            "label": "horse",
+            "type": "t_contract(Horse)7909",
+            "src": "contracts/Game.sol:30"
+          },
+          {
+            "contract": "Game",
+            "label": "userNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:32"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawNative",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:33"
+          },
+          {
+            "contract": "Game",
+            "label": "userHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:35"
+          },
+          {
+            "contract": "Game",
+            "label": "userWithdrawHrw",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/Game.sol:36"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorse",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "src": "contracts/Game.sol:38"
+          },
+          {
+            "contract": "Game",
+            "label": "userHorseMapping",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "src": "contracts/Game.sol:39"
+          },
+          {
+            "contract": "Game",
+            "label": "beneficiary",
+            "type": "t_address_payable",
+            "src": "contracts/Game.sol:41"
+          },
+          {
+            "contract": "Game",
+            "label": "withdrawFees",
+            "type": "t_uint256",
+            "src": "contracts/Game.sol:42"
+          },
+          {
+            "contract": "Game",
+            "label": "caller",
+            "type": "t_address",
+            "src": "contracts/Game.sol:43"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IERC20Upgradeable)277": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(Horse)7909": {
+            "label": "contract Horse"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
     }
   }
 }

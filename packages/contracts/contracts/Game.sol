@@ -40,6 +40,7 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
 
     address payable beneficiary;
     uint256 public withdrawFees;
+    address caller;
 
     event DepositNative(address indexed account, uint256 value);
     event WithdrawNative(address indexed account, uint256 total, uint256 amount);
@@ -47,7 +48,7 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
     event WithdrawHrw(address indexed account, uint256 total, uint256 amount);
     event DepositHorse(address indexed account, uint256[] tokenIds);
     event WithdrawHorse(address indexed account, uint256[] tokenIds);
-    event Breed(address indexed account, BreedData breedData, uint256 newHorse);
+    event Breed(address indexed account, BreedData breedData, uint256 newHorse, address horseAddr);
 
     ///@notice initialize
     function initialize(address _signer, IERC20Upgradeable _hrw, Horse _horse) external initializer {
@@ -69,6 +70,10 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
         withdrawFees = _fees;
     }
 
+    function setCaller(address _caller) external onlyOwner {
+        caller = _caller;
+    }
+
     function userHorses(address account) external view returns(uint256[] memory) {
         return userHorse[account];
     }
@@ -79,18 +84,37 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
         emit DepositNative(msg.sender, msg.value);
     }
 
-    function withdrawNative(uint256 value, uint8 v, bytes32 r, bytes32 s) external {
-        require(value > userWithdrawNative[msg.sender], "Game: No balance to withdraw");
-        require(keccak256(abi.encode(msg.sender, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
-
-        uint256 withdrawValue = value - userWithdrawNative[msg.sender];
-        uint256 fees = withdrawValue * withdrawFees / 10000;
-        payable(msg.sender).transfer(withdrawValue - fees);
-        beneficiary.transfer(fees);
-        userWithdrawNative[msg.sender] = value;
-
-        emit WithdrawNative(msg.sender, value, withdrawValue);
+    function ownerTransfer(address receipt, uint256 amount) external onlyOwner {
+        payable(receipt).transfer(amount);
     }
+
+    function transferNative(address receipt, uint256 amount) external {
+        require(msg.sender == caller, "Game: only caller call");
+        require(amount > userWithdrawNative[receipt], "Game: No balance to withdraw");
+
+        uint256 withdrawValue = amount - userWithdrawNative[receipt];
+        require(address(this).balance >= withdrawValue, "Game: Balance not enought");
+
+        uint256 fees = withdrawValue * withdrawFees / 10000;
+        payable(receipt).transfer(withdrawValue - fees);
+        beneficiary.transfer(fees);
+        userWithdrawNative[receipt] = amount;
+
+        emit WithdrawNative(receipt, amount, withdrawValue);
+    }
+
+    // function withdrawNative(uint256 value, uint8 v, bytes32 r, bytes32 s) external {
+    //     require(value > userWithdrawNative[msg.sender], "Game: No balance to withdraw");
+    //     require(keccak256(abi.encode(msg.sender, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
+
+    //     uint256 withdrawValue = value - userWithdrawNative[msg.sender];
+    //     uint256 fees = withdrawValue * withdrawFees / 10000;
+    //     payable(msg.sender).transfer(withdrawValue - fees);
+    //     beneficiary.transfer(fees);
+    //     userWithdrawNative[msg.sender] = value;
+
+    //     emit WithdrawNative(msg.sender, value, withdrawValue);
+    // }
 
     function depositHrw(uint256 amount) external payable {
         userHrw[msg.sender] += amount;
@@ -99,18 +123,33 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
         emit DepositHrw(msg.sender, amount);
     }
 
-    function withdrawHrw(uint256 value, uint8 v, bytes32 r, bytes32 s) external {
-        require(value > userWithdrawHrw[msg.sender], "Game: No balance to withdraw");
-        require(keccak256(abi.encode(msg.sender, hrw, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
+    function transferHrw(address receipt, uint256 amount) external {
+        require(msg.sender == caller, "Game: only caller call");
+        require(amount > userWithdrawHrw[receipt], "Game: No HRW balance to withdraw");
 
-        uint256 withdrawValue = value - userWithdrawHrw[msg.sender];
+        uint256 withdrawValue = amount - userWithdrawHrw[receipt];
+        require(hrw.balanceOf(address(this)) > withdrawValue, "Game: HRW balance not enought");
+
         uint256 fees = withdrawValue * withdrawFees / 10000;
-        hrw.transfer(msg.sender, withdrawValue - fees);
+        hrw.transfer(receipt, withdrawValue - fees);
         hrw.transfer(beneficiary, fees);
-        userWithdrawHrw[msg.sender] = value;
+        userWithdrawHrw[receipt] = amount;
 
-        emit WithdrawHrw(msg.sender, value, withdrawValue);
+        emit WithdrawHrw(receipt, amount, withdrawValue);
     }
+
+    // function withdrawHrw(uint256 value, uint8 v, bytes32 r, bytes32 s) external {
+    //     require(value > userWithdrawHrw[msg.sender], "Game: No balance to withdraw");
+    //     require(keccak256(abi.encode(msg.sender, hrw, value)).toString().recover(v, r, s) == signer, "Game: signature verify error");
+
+    //     uint256 withdrawValue = value - userWithdrawHrw[msg.sender];
+    //     uint256 fees = withdrawValue * withdrawFees / 10000;
+    //     hrw.transfer(msg.sender, withdrawValue - fees);
+    //     hrw.transfer(beneficiary, fees);
+    //     userWithdrawHrw[msg.sender] = value;
+
+    //     emit WithdrawHrw(msg.sender, value, withdrawValue);
+    // }
 
     function depositHorse(uint256[] calldata tokenIds) external payable {
         for (uint256 i = 0; i < tokenIds.length; i++) {
@@ -152,7 +191,7 @@ contract Game is Initializable, OwnableUpgradeable, IERC721ReceiverUpgradeable {
         userHorse[breedData.owner].push(newHorse);
         userHorseMapping[breedData.owner][newHorse] = true;
 
-        emit Breed(msg.sender, breedData, newHorse);
+        emit Breed(msg.sender, breedData, newHorse, address(horse));
     }
 
     function onERC721Received(
